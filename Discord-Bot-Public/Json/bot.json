@@ -1,0 +1,10 @@
+{
+    "Channel_Adjustment_Notification_State": false,
+    "Channel_Adjustment_Notification": "Channel_ID",
+    "Channel_Adjustment_Notification_SET": [
+        {
+            "ChannelCreate_Colour": "#00EC00",
+            "ChannelDelete_Colour": "#E60000"
+        }
+    ]
+}
