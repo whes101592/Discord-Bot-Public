@@ -33,13 +33,32 @@
 *
 
 ## 配置文件 - Config.json
-*
+```
+{
+ "token":"", //你的機器人 Token
+ "console":"" //你的 console 頻道ID
+}
+```
 
 ## 進階設定 - Bot.json
-*
+```
+{
+
+    "Channel_Adjustment_Notification_State": false,
+
+    "Channel_Adjustment_Notification": "Channel_ID",
+    "Channel_Adjustment_Notification_SET": [
+        {
+            "ChannelCreate_Colour": "#00EC00",
+            "ChannelDelete_Colour": "#E60000"
+        }
+    ]
+}
+```
 
 ## 字串文件 - String.json
-*
+```
+```
 
 ## 貢獻者
 * whes1015 - 程式開發
