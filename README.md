@@ -44,13 +44,12 @@
 ```
 {
 
-    "Channel_Adjustment_Notification_State": false,
-
-    "Channel_Adjustment_Notification": "Channel_ID",
-    "Channel_Adjustment_Notification_SET": [
+    "Channel_Adjustment_Notification_State": false, //是否啟用創建或刪除頻道通知
+    "Channel_Adjustment_Notification": "Channel_ID", //通知發送 頻道ID
+    "Channel_Adjustment_Notification_SET": [ //進階設定
         {
-            "ChannelCreate_Colour": "#00EC00",
-            "ChannelDelete_Colour": "#E60000"
+            "ChannelCreate_Colour": "#00EC00", //創建頻道 嵌入框 顏色
+            "ChannelDelete_Colour": "#E60000" //刪除頻道 嵌入框 顏色
         }
     ]
 }
@@ -58,6 +57,27 @@
 
 ## 字串文件 - String.json
 ```
+{
+
+    "Embed_Information":"Discord-Bot-Public 公版架構 ",
+
+    "GUILD_TEXT":"文字頻道 已建立",
+
+    "GUILD_VOICE":"語音頻道 已建立",
+
+    "GUILD_NEWS":"公告頻道 已建立",
+
+    "GUILD_STAGE_VOICE":"舞台頻道 已建立",
+
+    "DELETE_GUILD_TEXT":"文字頻道 已刪除",
+
+    "DELETE_GUILD_VOICE":"語音頻道 已刪除",
+
+    "DELETE_GUILD_NEWS":"公告頻道 已刪除",
+
+    "DELETE_GUILD_STAGE_VOICE":"舞台頻道 已刪除"
+
+}
 ```
 
 ## 貢獻者
