@@ -5,7 +5,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_
 const fs = require('fs');
 //#endregion
 
-let ver = "21w41a-Public"
+let ver = "21w41b-Public-Beta"
 
 //#region 變數宣告區域
 let err = ""
@@ -81,7 +81,7 @@ client.on('messageCreate', message => {
 
     //#region reload
     if (message.channel.id == consolechannel && (message.content == "reload" || message.content == "Reload" || message.content == "RELOAD")) {
-        client.channels.cache.get(consolechannel).send(":white_check_mark: 正在重新加載配置文件 - " + ver);
+        client.channels.cache.get(bot_json["Channel_Adjustment_Notification"]).send(":white_check_mark: 正在重新加載配置文件 - " + ver);
         err=""
         cache()
     }
@@ -116,7 +116,7 @@ client.on('messageCreate', message => {
                 .setThumbnail(channel.guild.iconURL())
                 .setTimestamp()
                 .setFooter(string_json["Embed_Information"] + ver, 'https://res.cloudinary.com/dpk8k0rob/image/upload/v1633698487/ExpTech_vjjh4b.jpg');
-            client.channels.cache.get(consolechannel).send({ embeds: [exampleEmbed] });
+            client.channels.cache.get(bot_json["Channel_Adjustment_Notification"]).send({ embeds: [exampleEmbed] });
         }
     })
     //#endregion
