@@ -32,6 +32,26 @@
 ### Node.js 模組
 *
 
+### 建立環境
+* 使用 Windows+R 打開 CMD 視窗
+* 使用下方指令檢查是否有安裝 Node
+```console 
+node -v
+```
+* 指令執行後的正確結果 (若非正確結果請安裝 Node)
+```
+v16.10.0
+```
+* Windows Node V 16.10.0 載點: (https://nodejs.org/dist/v16.10.0/node-v16.10.0-x64.msi)
+* 確認安裝 Node 之後 CD 到 index.js 的目錄下 (請使用自己的路徑)
+```console 
+cd C:\Users\E\Desktop\Discord-Bot-Public\
+```
+* 啟動機器人
+```console 
+node index.js
+```
+
 ## 配置文件 - Config.json
 ```
 {
