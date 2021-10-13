@@ -60,7 +60,9 @@ node index.js
 ```
 {
  "token":"", //你的機器人 Token
- "console":"" //你的 console 頻道ID
+ "console":"", //你的 console 頻道ID
+ "API_URL":"http://exptech.mywire.org:1015/", //API URL
+ "API_KEY":"" //API 密鑰
 }
 ```
 
