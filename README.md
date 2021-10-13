@@ -30,7 +30,9 @@
 * npm - V 7.24.0
 * discord.js - V 13.2.0
 ### Node.js 模組
-*
+```console
+npm install axios
+```
 
 ### 建立環境
 * 下載 機器人 核心代碼 Zip檔案 載點: (https://github.com/ExpTech-tw/Discord-Bot-Public/releases)
