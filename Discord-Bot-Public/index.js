@@ -1,5 +1,4 @@
 //#region 變數
-const translate = require('@vitalets/google-translate-api');
 const { MessageEmbed, GuildMember } = require('discord.js');
 const { Client, Intents } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
