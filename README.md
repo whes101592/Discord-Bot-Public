@@ -24,6 +24,7 @@
 * 追求穩定可使用基於 Code區域 原始碼開發位於 (Tag) 區域之已發布版本
 * 不推薦使用 Code區域 原始碼創建機器人
 * 如需更改代碼請創建分支或新增拉取請求並遵守 AGPL-3.0 開源協議
+* Discord (https://discord.gg/TtvkHwy97f)
 
 ## 環境要求
 * Node.js - V 16.10.0
@@ -89,27 +90,19 @@ node index.js
 ## 字串文件 - String.json
 ```
 {
-
     "Embed_Information":"Discord-Bot-Public 公版架構 ",
-
     "GUILD_TEXT":"文字頻道 已建立",
-
     "GUILD_VOICE":"語音頻道 已建立",
-
     "GUILD_NEWS":"公告頻道 已建立",
-
     "GUILD_STAGE_VOICE":"舞台頻道 已建立",
-
     "DELETE_GUILD_TEXT":"文字頻道 已刪除",
-
     "DELETE_GUILD_VOICE":"語音頻道 已刪除",
-
     "DELETE_GUILD_NEWS":"公告頻道 已刪除",
-
     "DELETE_GUILD_STAGE_VOICE":"舞台頻道 已刪除"
-
 }
 ```
 
 ## 貢獻者
 * whes1015 - 程式開發
+* 炸蝦好吃 - 協助校正
+* smile - 協助校正
