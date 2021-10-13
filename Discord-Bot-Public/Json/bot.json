@@ -1,12 +1,1 @@
-{
-    "ChatRecorder_State": false,
-    "Chat recorder": "Channel_ID",
-    "Channel_Adjustment_Notification_State": true,
-    "Channel_Adjustment_Notification": "895847483815624700",
-    "Channel_Adjustment_Notification_SET": [
-        {
-            "ChannelCreate_Colour": "#00EC00",
-            "ChannelDelete_Colour": "#E60000"
-        }
-    ]
-}
+{"Translate_State":true,"Translate_Repeat_Tag":false,"Translate_en":"897146761188089886","Translate_zh_TW":"895847483815624706","ChatRecorder_State":true,"ChatRecorder":"896620117696331796","Channel_Adjustment_Notification_State":true,"Channel_Adjustment_Notification":"895847483815624706","Channel_Adjustment_Notification_SET":[{"ChannelCreate_Colour":"#00EC00","ChannelDelete_Colour":"#E60000"}]}
