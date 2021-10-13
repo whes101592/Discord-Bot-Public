@@ -69,8 +69,13 @@ node index.js
 ## 進階設定 - Bot.json
 ```
 {
-
-    "Channel_Adjustment_Notification_State": false, //是否啟用創建或刪除頻道通知
+    "Translate_State": false, 啟用或關閉 翻譯功能
+    "Translate_Repeat_Tag": true, //啟用或關閉 翻譯時重複 Tag
+    "Translate_en": "Channel_ID", //英文 頻道ID
+    "Translate_zh_TW": "Channel_ID", //中文 頻道ID
+    "ChatRecorder_State": false, //啟用或關閉 聊天記錄器
+    "ChatRecorder": "Channel_ID", //聊天記錄器 頻道ID
+    "Channel_Adjustment_Notification_State": false, //啟用或關閉 創建和刪除頻道通知
     "Channel_Adjustment_Notification": "Channel_ID", //通知發送 頻道ID
     "Channel_Adjustment_Notification_SET": [ //進階設定
         {
