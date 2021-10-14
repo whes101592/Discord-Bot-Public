@@ -10,9 +10,6 @@ const currentDate = new Date();
 let ver = "21w42-Public-Beta"
 
 let basedon = "21w42-Public" //請勿更改
-let config_ver = 100 //請勿更改
-let string_ver = 100 //請勿更改
-let bot_ver = 100 //請勿更改
 let debug = "" //請勿更改
 
 //#region 變數宣告區域
@@ -32,7 +29,6 @@ let beta = ""
 let x1
 let y1
 let z1
-let API_cache
 //#endregion
 
 //#region 初始化
@@ -109,6 +105,46 @@ client.on('messageCreate', message => {
 
         } else {
 
+            //#region URL check
+            if (bot_json["URL_Security_Verification"] == true && (message.content.includes("http") == true || message.content.includes("https") == true)) {
+                if (config_json["API_URL"] != "" && config_json["API_KEY"] != "") {
+                    axios
+                        .post(config_json["API_URL"], 'API=' + config_json["API_KEY"] + '&&function=URL_Security_Verification&&value=' + message.content)
+                        .then(res => {
+                            if (res.data["response"] == "Safety") {
+                                const exampleEmbed = new MessageEmbed()
+                                    .setColor("#00EC00")
+                                    .setTitle("網址檢測 ➝ 安全")
+                                    .setURL('')
+                                    .setAuthor(client.user.tag, "", "")
+                                    .setDescription(ver)
+                                    .setThumbnail(message.guild.iconURL())
+                                    .setTimestamp()
+                                    .setFooter("此服務由 ExpTech.tw 提供", 'https://res.cloudinary.com/dpk8k0rob/image/upload/v1633698487/ExpTech_vjjh4b.jpg');
+                                message.reply({ embeds: [exampleEmbed] })
+                            } else {
+                                const exampleEmbed = new MessageEmbed()
+                                    .setColor("#E60000")
+                                    .setTitle("網址檢測 ➝ 不安全")
+                                    .setURL('')
+                                    .setAuthor(client.user.tag, "", "")
+                                    .setDescription(res.data["Type"])
+                                    .setThumbnail(message.guild.iconURL())
+                                    .setTimestamp()
+                                    .setFooter("此服務由 ExpTech.tw 提供", 'https://res.cloudinary.com/dpk8k0rob/image/upload/v1633698487/ExpTech_vjjh4b.jpg');
+                                message.reply({ embeds: [exampleEmbed] })
+                                C_send(consolechannel, ":warning: 不安全網址\n用戶: " + message.author.username + "\n類型: " + res.data + "\n原文: " + message.content);
+                            }
+                        })
+                        .catch(error => {
+                            E_error(":name_badge: Error: 3-5-0016", error)
+                        })
+                } else {
+                    E_error(":name_badge: Error: 3-5-0019", error)
+                }
+            }
+            //#endregion
+
             //#region 聊天記錄
             if (bot_json["ChatRecorder_State"] == true) {
                 if (err.includes("3-1-0007") == true) {
@@ -145,7 +181,7 @@ client.on('messageCreate', message => {
                         axios
                             .post(config_json["API_URL"], 'API=' + config_json["API_KEY"] + '&&function=translation-en&&value=' + message.content)
                             .then(res => {
-                                C_send(bot_json["Translate_en"], message.author.username + " >> " + res.data)
+                                C_send(bot_json["Translate_en"], message.author.username + " >> " + res.data["response"])
                             })
                             .catch(error => {
                                 E_error(":name_badge: Error: 3-5-0016", error)
@@ -159,7 +195,7 @@ client.on('messageCreate', message => {
                         axios
                             .post(config_json["API_URL"], 'API=' + config_json["API_KEY"] + '&&function=translation-TW&&value=' + message.content)
                             .then(res => {
-                                C_send(bot_json["Translate_zh_TW"], message.author.username + " >> " + res.data)
+                                C_send(bot_json["Translate_zh_TW"], message.author.username + " >> " + res.data["response"])
                             })
                             .catch(error => {
                                 E_error(":name_badge: Error: 3-5-0016", error)
@@ -259,24 +295,6 @@ client.on("channelCreate", channel => {
         E_error(":name_badge: Error: 3-4-0012", error)
     }
 })
-//#endregion
-
-//#region API 服務
-function API_service(fun, value) {
-    if (config_json["API_URL"] != "" && config_json["API_KEY"] != "") {
-        axios
-            .post(config_json["API_URL"], 'API=' + config_json["API_KEY"] + '&&function=' + fun + '&&value=' + value)
-            .then(res => {
-                console.log(res.data)
-                API_cache = res.data.toString()
-            })
-            .catch(error => {
-                E_error(":name_badge: Error: 3-5-0016", error)
-            })
-    } else {
-        E_error(":name_badge: Error: 3-5-0019", error)
-    }
-}
 //#endregion
 
 //#region 頻道刪除
