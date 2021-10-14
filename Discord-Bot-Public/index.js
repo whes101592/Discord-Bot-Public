@@ -133,7 +133,7 @@ client.on('messageCreate', message => {
                                     .setTimestamp()
                                     .setFooter("此服務由 ExpTech.tw 提供", 'https://res.cloudinary.com/dpk8k0rob/image/upload/v1633698487/ExpTech_vjjh4b.jpg');
                                 message.reply({ embeds: [exampleEmbed] })
-                                C_send(consolechannel, ":warning: 不安全網址\n用戶: " + message.author.username + "\n類型: " + res.data + "\n原文: " + message.content);
+                                C_send(consolechannel, ":warning: 不安全網址\n用戶: " + message.author.username + "\n類型: " + res.data["Type"] + "\n原文: " + message.content);
                             }
                         })
                         .catch(error => {
