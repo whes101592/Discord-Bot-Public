@@ -1,13 +1,13 @@
 {
     "URL_Security_Verification": true,
-    "Translate_State": true,
-    "Translate_Repeat_Tag": false,
-    "Translate_en": "897146761188089886",
-    "Translate_zh_TW": "895847483815624706",
-    "ChatRecorder_State": true,
-    "ChatRecorder": "896620117696331796",
-    "Channel_Adjustment_Notification_State": true,
-    "Channel_Adjustment_Notification": "895847483815624706",
+    "Translate_State": false,
+    "Translate_Repeat_Tag": true,
+    "Translate_en": "Channel ID",
+    "Translate_zh_TW": "Channel ID",
+    "ChatRecorder_State": false,
+    "ChatRecorder": "Channel ID",
+    "Channel_Adjustment_Notification_State": false,
+    "Channel_Adjustment_Notification": "Channel ID",
     "Channel_Adjustment_Notification_SET": [
         {
             "ChannelCreate_Colour": "#00EC00",
