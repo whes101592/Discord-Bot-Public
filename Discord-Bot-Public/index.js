@@ -3,11 +3,11 @@ const { MessageEmbed, GuildMember } = require('discord.js');
 const { Client, Intents } = require('discord.js');
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const fs = require('fs');
+const fetch = require('node-fetch');
 const axios = require('axios')
-const currentDate = new Date();
 //#endregion
 
-let ver = "21w42-Public-Beta"
+let ver = "21w42-Public-Beta-1"
 
 let basedon = "21w42-Public" //請勿更改
 let debug = "" //請勿更改
@@ -22,13 +22,51 @@ let consolechannel = ""
 let config_json
 let bot_json
 let string_json
-let config_json_cache = ""
-let bot_json_cache = ""
-let string_json_cache = ""
 let beta = ""
-let x1
-let y1
-let z1
+let update_json
+let check_json
+//#endregion
+
+//#region 初始化文件檢測
+fs.readFile(config_path, function (error, data) {
+    if (error) {
+        if (error.errno == -4058) {
+            fetch('http://150.117.110.118/config.json')
+                .then(function (res) {
+                    return res.json();
+                }).then(function (json) {
+                    fs.writeFile(config_path, JSON.stringify(json), (err) => {
+                    })
+                })
+        }
+    }
+})
+fs.readFile(bot_path, function (error, data) {
+    if (error) {
+        if (error.errno == -4058) {
+            fetch('http://150.117.110.118/bot.json')
+                .then(function (res) {
+                    return res.json();
+                }).then(function (json) {
+                    fs.writeFile(bot_path, JSON.stringify(json), (err) => {
+                    })
+                })
+        }
+    }
+})
+fs.readFile(string_path, function (error, data) {
+    if (error) {
+        if (error.errno == -4058) {
+            fetch('http://150.117.110.118/string.json')
+                .then(function (res) {
+                    return res.json();
+                }).then(function (json) {
+                    fs.writeFile(string_path, JSON.stringify(json), (err) => {
+                    })
+                })
+        }
+    }
+})
 //#endregion
 
 //#region 初始化
@@ -57,7 +95,6 @@ fs.readFile(config_path, function (error, data) {
 
 //#region 初始化完成
 client.on('ready', () => {
-
     if (debug == "1") {
         C_send(consolechannel, ":closed_lock_with_key: 檢測到非正式版本 為確保數據安全已終止進程 - " + ver);
         console.log('\x1b[31m', "Warn: 5-2-0014 版本: " + ver, '\x1b[0m')
@@ -66,6 +103,9 @@ client.on('ready', () => {
     } else {
         if (err == "") {
             C_send(consolechannel, ":white_check_mark: 機器人成功啟動 - " + ver);
+        } else if (err == "Update") {
+            C_send(consolechannel, ":warning: 機器人已啟動 版本: " + ver + "\n:name_badge: 配置文件須更新 請使用 Update 完成更新");
+            err = ""
         } else {
             C_send(consolechannel, ":warning: 機器人已啟動 版本: " + ver + "\n:name_badge: 啟動過程拋出異常 試著使用 Reload 來定位錯誤");
         }
@@ -84,6 +124,14 @@ client.on('messageCreate', message => {
             //#region reload
             if (message.content == "reload" || message.content == "Reload" || message.content == "RELOAD") {
                 C_send(consolechannel, ":white_check_mark: 正在重新加載配置文件 版本: " + ver);
+                err = ""
+                cache(1)
+            }
+            //#endregion
+
+            //#region update
+            if (message.content == "Update" || message.content == "update" || message.content == "UPDATE") {
+                C_send(consolechannel, ":white_check_mark: 驗證配置文件完整度 版本: " + ver);
                 err = ""
                 cache(1)
             }
@@ -350,96 +398,101 @@ function E_error(error, info) {
         client.channels.cache.get(consolechannel).send(error + " 版本: " + ver)
         if (info != "") client.channels.cache.get(consolechannel).send(":recycle: 錯誤詳情: " + info)
     }
-
 }
 //#endregion
 
 //#region 檔案讀取
 function cache(x) {
     try {
-        if (x == 1) {
-            x1 = string_json
-            y1 = bot_json
-            z1 = config_json
-            string_json = string_json_cache
-            bot_json = bot_json_cache
-            config_json = config_json_cache
-        }
-        fs.readFile(string_path, function (error, data) {
-            if (error) {
-                err = err + ":name_badge: Error: 5-3-0004\n"
-                E_error(":name_badge: Error: 5-3-0004", error)
-            } else {
-                if (x != 1) string_json = JSON.parse(data.toString());
-                if (string_json_cache == "") string_json_cache = string_json
-                if (check != "") C_send(consolechannel, ":white_check_mark: string.json 加載完畢");
-            }
-            fs.readFile(bot_path, function (error, data) {
-                if (error) {
-                    err = err + ":name_badge: Error: 5-3-0005\n"
-                    E_error(":name_badge: Error: 5-3-0005", error)
-                } else {
-                    if (x != 1) bot_json = JSON.parse(data.toString());
-                    if (bot_json_cache == "") bot_json_cache = bot_json
-                    if (check != "") C_send(consolechannel, ":placard: Channel_Adjustment_Notification_State [" + bot_json["Channel_Adjustment_Notification_State"] + "]");
-                    if (check != "") C_send(consolechannel, ":placard: Channel_Adjustment_Notification [" + bot_json["Channel_Adjustment_Notification"] + "]");
-                    if (check != "") C_send(consolechannel, ":placard: ChatRecorder_State [" + bot_json["ChatRecorder_State"] + "]");
-                    if (check != "") C_send(consolechannel, ":placard: ChatRecorder [" + bot_json["ChatRecorder"] + "]");
-                    if (check != "") C_send(consolechannel, ":placard: Translate_State [" + bot_json["Translate_State"] + "]");
-                    if (check != "") C_send(consolechannel, ":placard: Translate_Repeat_Tag [" + bot_json["Translate_Repeat_Tag"] + "]");
-                    if (check != "") C_send(consolechannel, ":placard: Translate_en [" + bot_json["Translate_en"] + "]");
-                    if (check != "") C_send(consolechannel, ":placard: Translate_zh_TW [" + bot_json["Translate_zh_TW"] + "]");
-
-
-
-                    if (bot_json["Channel_Adjustment_Notification_State"] != false && bot_json["Channel_Adjustment_Notification"] == "Channel_ID") {
-                        err = err + ":name_badge: Error: 3-1-0006\n"
-                        E_error(":name_badge: Error: 3-1-0006");
-                    }
-                    if (bot_json["ChatRecorder_State"] != false) {
-                        beta = ":bulb: Beta-0001\n"
-                        if (bot_json["ChatRecorder"] == "Channel_ID") {
-                            err = err + ":name_badge: Error: 3-1-0007\n"
-                            E_error(":name_badge: Error: 3-1-0007");
-                        }
-                    }
-                    if (bot_json["Translate_State"] != false && (bot_json["Translate_zh_TW"] == "Channel_ID" || bot_json["Translate_en"] == "Channel_ID")) {
-                        err = err + ":name_badge: Error: 3-1-0015\n"
-                        E_error(":name_badge: Error: 3-1-0015");
-                    }
-
-                    if (check != "") C_send(consolechannel, ":white_check_mark: bot.json 加載完畢");
-
-                }
-                fs.readFile(config_path, function (error, data) {
+        fetch('http://150.117.110.118/update.json')
+            .then(function (res) {
+                return res.json();
+            }).then(function (json) {
+                update_json = json
+                fs.readFile(string_path, function (error, data) {
                     if (error) {
-                        err = err + ":name_badge: Error: 5-1-0002\n"
-                        E_error(":name_badge: Error: 5-1-0002", error)
+                        err = err + ":name_badge: Error: 5-3-0004\n"
+                        E_error(":name_badge: Error: 5-3-0004", error)
                     } else {
-                        if (x != 1) config_json = JSON.parse(data.toString());
-                        if (config_json_cache == "") config_json_cache = config_json
-                        if (check != "") C_send(consolechannel, ":white_check_mark: config.json 加載完畢");
+                        if (x != 1) string_json = JSON.parse(data.toString());
+                        if (check != "") C_send(consolechannel, ":white_check_mark: string.json 加載完畢");
                     }
-                    if (err == "") {
-                        if (check != "") C_send(consolechannel, ":white_check_mark: 配置文件加載成功 版本: " + ver);
-                        fs.writeFile(string_path, JSON.stringify(string_json_cache), function () {
-                        })
-                        fs.writeFile(config_path, JSON.stringify(config_json_cache), function () {
-                        })
-                        fs.writeFile(bot_path, JSON.stringify(bot_json_cache), function () {
-                        })
+                    fs.readFile(bot_path, function (error, data) {
+                        if (error) {
+                            err = err + ":name_badge: Error: 5-3-0005\n"
+                            E_error(":name_badge: Error: 5-3-0005", error)
+                        } else {
+                            if (x != 1) bot_json = JSON.parse(data.toString());
+                            if (check != "") C_send(consolechannel, ":white_check_mark: bot.json 加載完畢");
+                        }
+                        fs.readFile(config_path, function (error, data) {
+                            if (error) {
+                                err = err + ":name_badge: Error: 5-1-0002\n"
+                                E_error(":name_badge: Error: 5-1-0002", error)
+                            } else {
+                                if (x != 1) config_json = JSON.parse(data.toString());
+                                if (check != "") C_send(consolechannel, ":white_check_mark: config.json 加載完畢");
 
-                    } else {
-                        if (check != "") C_send(consolechannel, ":warning: 配置文件加載完畢 版本: " + ver + "\n:name_badge: 加載過程拋出異常 試著根據 錯誤碼 來定位並修復錯誤" + "\n:name_badge: 本次更改將不會被保存至配置文件");
-                        string_json = x1
-                        bot_json = y1
-                        config_json = z1
-                    }
-                    if (beta != "" && check != "") C_send(consolechannel, ":satellite: 已啟用 Beta 功能 可能導致崩潰 請留意\n" + beta);
-                    if (check == "") check = "1"
+                                let update_Ver = config_json["Update_ver"]
+                                let update_ver = update_json["Update_ver"]
+                                for (update_Ver; update_Ver <= update_ver; update_Ver++) {
+                                    if (update_json[update_Ver][0]["config"] != undefined) {
+                                        update_Array = update_json[update_Ver][0]["config"][0]["Index"]
+                                        for (let index = 0; index < update_Array.length; index++) {
+                                            if (config_json[update_Array[index]] == undefined) {
+                                                if (check == "") err = "Update"
+                                                if (check != "") C_send(consolechannel, ":arrow_up: " + update_Array[index] + " [" + update_json[update_Ver][0]["config"][0][update_Array[index]] + "]");
+                                                if (check != "") config_json[update_Array[index]] = update_json[update_Ver][0]["config"][0][update_Array[index]]
+                                            } else {
+                                                if (check != "") C_send(consolechannel, ":placard: " + update_Array[index] + " [" + config_json[update_Array[index]] + "]");
+                                            }
+                                        }
+                                    }
+                                    if (update_json[update_Ver][0]["bot"] != undefined) {
+                                        update_Array = update_json[update_Ver][0]["bot"][0]["Index"]
+                                        for (let index = 0; index < update_Array.length; index++) {
+                                            if (bot_json[update_Array[index]] == undefined) {
+                                                if (check == "") err = "Update"
+                                                if (check != "") C_send(consolechannel, ":arrow_up: " + update_Array[index] + " [" + update_json[update_Ver][0]["bot"][0][update_Array[index]] + "]");
+                                                if (check != "") bot_json[update_Array[index]] = update_json[update_Ver][0]["bot"][0][update_Array[index]]
+                                            } else {
+                                                if (check != "") C_send(consolechannel, ":placard: " + update_Array[index] + " [" + bot_json[update_Array[index]] + "]");
+                                            }
+                                        }
+                                    }
+                                    if (update_json[update_Ver][0]["string"] != undefined) {
+                                        update_Array = update_json[update_Ver][0]["string"][0]["Index"]
+                                        for (let index = 0; index < update_Array.length; index++) {
+                                            if (string_json[update_Array[index]] == undefined) {
+                                                if (check == "") err = "Update"
+                                                if (check != "") C_send(consolechannel, ":arrow_up: " + update_Array[index] + " [" + update_json[update_Ver][0]["string"][0][update_Array[index]] + "]");
+                                                if (check != "") string_json[update_Array[index]] = update_json[update_Ver][0]["string"][0][update_Array[index]]
+                                            } else {
+                                                if (check != "") C_send(consolechannel, ":placard: " + update_Array[index] + " [" + string_json[update_Array[index]] + "]");
+                                            }
+                                        }
+                                    }
+                                }
+                                if (check != "") config_json["Update_ver"] = update_ver
+                                if (check != "") C_send(consolechannel, ":arrow_up: Update_ver [" + update_ver + "]");
+                            }
+                            if (err == "") {
+                                if (check != "") C_send(consolechannel, ":white_check_mark: 配置文件加載成功 版本: " + ver);
+                                fs.writeFile(string_path, JSON.stringify(string_json), function () {
+                                })
+                                fs.writeFile(config_path, JSON.stringify(config_json), function () {
+                                })
+                                fs.writeFile(bot_path, JSON.stringify(bot_json), function () {
+                                })
+                            } else {
+                                if (check != "") C_send(consolechannel, ":warning: 配置文件加載完畢 版本: " + ver + "\n:name_badge: 加載過程拋出異常 試著根據 錯誤碼 來定位並修復錯誤" + "\n:name_badge: 本次更改將不會被保存至配置文件");
+                            }
+                            if (beta != "" && check != "") C_send(consolechannel, ":satellite: 已啟用 Beta 功能 可能導致崩潰 請留意\n" + beta);
+                            if (check == "") check = "1"
+                        })
+                    })
                 })
             })
-        })
     } catch (error) {
         err = err + ":name_badge: Error: 4-4-0010\n"
         E_error(":name_badge: Error: 4-4-0010", error)
@@ -450,109 +503,41 @@ function cache(x) {
 //#region set
 function SET(x) {
     try {
-        x = x.split(" ")
-        if (x[0] == "Channel_Adjustment_Notification_State") {
-            if (x[1] == "true") {
-                bot_json_cache["Channel_Adjustment_Notification_State"] = true
-                C_send(consolechannel, ":white_check_mark: Channel_Adjustment_Notification_State 已成功設定為 [true]\n:warning: 使用 Reload 來套用新設定");
-            } else if (x[1] == "false") {
-                bot_json_cache["Channel_Adjustment_Notification_State"] = false
-                C_send(consolechannel, ":white_check_mark: Channel_Adjustment_Notification_State 已成功設定為 [false]\n:warning: 使用 Reload 來套用新設定");
-            } else {
-                C_send(consolechannel, ":warning: 未知的附屬指令");
-            }
-        } else if (x[0] == "Channel_Adjustment_Notification") {
-            if (Number.isInteger(Number(x[1])) == true) {
-                bot_json_cache["Channel_Adjustment_Notification"] = x[1]
-                C_send(consolechannel, ":white_check_mark: Channel_Adjustment_Notification 已成功設定為 [" + x[1] + "]\n:warning: 使用 Reload 來套用新設定");
-
-            } else if (x[1] == "clear") {
-                bot_json_cache["Channel_Adjustment_Notification"] = "Channel_ID"
-                bot_json_cache["Channel_Adjustment_Notification_State"] = false
-                C_send(consolechannel, ":white_check_mark: Channel_Adjustment_Notification 已成功清除\n:warning: 已關閉 Channel_Adjustment_Notification 功能\n:warning: 使用 Reload 來套用新設定");
-            } else {
-                C_send(consolechannel, ":warning: 未知的附屬指令");
-            }
-        } else if (x[0] == "ChatRecorder_State") {
-            if (x[1] == "true") {
-                bot_json_cache["ChatRecorder_State"] = true
-                C_send(consolechannel, ":white_check_mark: ChatRecorder_State 已成功設定為 [true]\n:warning: 使用 Reload 來套用新設定");
-            } else if (x[1] == "false") {
-                bot_json_cache["ChatRecorder_State"] = false
-                C_send(consolechannel, ":white_check_mark: ChatRecorder_State 已成功設定為 [false]\n:warning: 使用 Reload 來套用新設定");
-            } else {
-                C_send(consolechannel, ":warning: 未知的附屬指令");
-            }
-        } else if (x[0] == "Translate_State") {
-            if (x[1] == "true") {
-                bot_json_cache["Translate_State"] = true
-                C_send(consolechannel, ":white_check_mark: Translate_State 已成功設定為 [true]\n:warning: 使用 Reload 來套用新設定");
-            } else if (x[1] == "false") {
-                bot_json_cache["Translate_State"] = false
-                C_send(consolechannel, ":white_check_mark: Translate_State 已成功設定為 [false]\n:warning: 使用 Reload 來套用新設定");
-            } else {
-                C_send(consolechannel, ":warning: 未知的附屬指令");
-            }
-        } else if (x[0] == "ChatRecorder") {
-            if (Number.isInteger(Number(x[1])) == true) {
-                bot_json_cache["ChatRecorder"] = x[1]
-                C_send(consolechannel, ":white_check_mark: ChatRecorder 已成功設定為 [" + x[1] + "]\n:warning: 使用 Reload 來套用新設定");
-
-            } else if (x[1] == "clear") {
-                bot_json_cache["ChatRecorder"] = "Channel_ID"
-                bot_json_cache["ChatRecorder_State"] = false
-                C_send(consolechannel, ":white_check_mark: ChatRecorder 已成功清除\n:warning: 已關閉 Channel_Adjustment_Notification 功能\n:warning: 使用 Reload 來套用新設定");
-            } else {
-                C_send(consolechannel, ":warning: 未知的附屬指令");
-            }
-        } else if (x[0] == "Translate_en") {
-            if (Number.isInteger(Number(x[1])) == true) {
-                bot_json_cache["Translate_en"] = x[1]
-                C_send(consolechannel, ":white_check_mark: Translate_en 已成功設定為 [" + x[1] + "]\n:warning: 使用 Reload 來套用新設定");
-
-            } else if (x[1] == "clear") {
-                bot_json_cache["Translate_en"] = "Channel_ID"
-                bot_json_cache["Translate_en_State"] = false
-                C_send(consolechannel, ":white_check_mark: Translate_en 已成功清除\n:warning: 已關閉 Channel_Adjustment_Notification 功能\n:warning: 使用 Reload 來套用新設定");
-            } else {
-                C_send(consolechannel, ":warning: 未知的附屬指令");
-            }
-        } else if (x[0] == "Translate_zh_TW") {
-            if (Number.isInteger(Number(x[1])) == true) {
-                bot_json_cache["Translate_zh_TW"] = x[1]
-                C_send(consolechannel, ":white_check_mark: Translate_zh_TW 已成功設定為 [" + x[1] + "]\n:warning: 使用 Reload 來套用新設定");
-
-            } else if (x[1] == "clear") {
-                bot_json_cache["Translate_zh_TW"] = "Channel_ID"
-                bot_json_cache["Translate_zh_TW_State"] = false
-                C_send(consolechannel, ":white_check_mark: Translate_zh_TW 已成功清除\n:warning: 已關閉 Channel_Adjustment_Notification 功能\n:warning: 使用 Reload 來套用新設定");
-            } else {
-                C_send(consolechannel, ":warning: 未知的附屬指令");
-            }
-        } else if (x[0] == "Translate_Repeat_Tag") {
-            if (x[1] == "true") {
-                bot_json_cache["Translate_Repeat_Tag"] = true
-                C_send(consolechannel, ":white_check_mark: Translate_Repeat_Tag 已成功設定為 [true]\n:warning: 使用 Reload 來套用新設定");
-            } else if (x[1] == "false") {
-                bot_json_cache["Translate_Repeat_Tag"] = false
-                C_send(consolechannel, ":white_check_mark: Translate_Repeat_Tag 已成功設定為 [false]\n:warning: 使用 Reload 來套用新設定");
-            } else {
-                C_send(consolechannel, ":warning: 未知的附屬指令");
-            }
-        } else {
-            C_send(consolechannel, ":warning: 未知的指令");
-        }
-
+        fetch('http://150.117.110.118/check.json')
+            .then(function (res) {
+                return res.json();
+            }).then(function (json) {
+                check_json = json
+                x = x.split(" ")
+                if (check_json[x[0]] != undefined) {
+                    if (check_json[x[0]] == "number") {
+                        if (Number.isInteger(Number(x[1])) == true) {
+                            bot_json[x[0]] = x[1]
+                            C_send(consolechannel, ":white_check_mark: " + x[0] + " 已成功設定為 [" + x[1] + "]\n:warning: 使用 Reload 來儲存設定");
+                        } else {
+                            C_send(consolechannel, ":warning: 未知的附屬指令");
+                        }
+                    } else if (check_json[x[0]] == null) {
+                        bot_json[x[0]] = x[1]
+                        C_send(consolechannel, ":white_check_mark: " + x[0] + " 已成功設定為 [" + x[1] + "]\n:warning: 使用 Reload 來儲存設定");
+                    } else {
+                        if (check_json[x[0]].indexOf(x[1]) != -1) {
+                            bot_json[x[0]] = x[1]
+                            C_send(consolechannel, ":white_check_mark: " + x[0] + " 已成功設定為 [" + x[1] + "]\n:warning: 使用 Reload 來儲存設定");
+                        } else {
+                            C_send(consolechannel, ":warning: 未知的附屬指令");
+                        }
+                    }
+                } else {
+                    C_send(consolechannel, ":warning: 未知的指令");
+                }
+            })
     } catch (error) {
         err = err + ":name_badge: Error: 4-4-0009\n"
         E_error(":name_badge: Error: 4-4-0009", error)
     }
 }
 //#endregion
-
-
-
-
 
 
 
