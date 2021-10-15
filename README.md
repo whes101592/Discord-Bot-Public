@@ -40,8 +40,8 @@
 * discord.js - V 13.2.0
 
 ### 建立環境
-* 下載 機器人 核心代碼 Zip檔案 載點: (https://github.com/ExpTech-tw/Discord-Bot-Public/releases)
-* 將 Zip檔案 解壓縮到桌面
+* 下載 機器人 核心代碼 index.js檔案 載點: (https://github.com/ExpTech-tw/Discord-Bot-Public/releases)
+* 將 檔案 放到桌面空資料夾
 * 使用 Windows+R 打開 CMD 視窗
 * 使用下方指令檢查是否有安裝 Node
 ```console 
