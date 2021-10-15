@@ -7,7 +7,7 @@ const fetch = require('node-fetch');
 const axios = require('axios')
 //#endregion
 
-let ver = "21w42-Public-Beta-1"
+let ver = "21w42-Public"
 
 let basedon = "21w42-Public" //請勿更改
 let debug = "" //請勿更改
@@ -31,7 +31,7 @@ let check_json
 fs.readFile(config_path, function (error, data) {
     if (error) {
         if (error.errno == -4058) {
-            fetch('http://150.117.110.118/config.json')
+            fetch('http://exptech.mywire.org/config.json')
                 .then(function (res) {
                     return res.json();
                 }).then(function (json) {
@@ -44,7 +44,7 @@ fs.readFile(config_path, function (error, data) {
 fs.readFile(bot_path, function (error, data) {
     if (error) {
         if (error.errno == -4058) {
-            fetch('http://150.117.110.118/bot.json')
+            fetch('http://exptech.mywire.org/bot.json')
                 .then(function (res) {
                     return res.json();
                 }).then(function (json) {
@@ -57,7 +57,7 @@ fs.readFile(bot_path, function (error, data) {
 fs.readFile(string_path, function (error, data) {
     if (error) {
         if (error.errno == -4058) {
-            fetch('http://150.117.110.118/string.json')
+            fetch('http://exptech.mywire.org/string.json')
                 .then(function (res) {
                     return res.json();
                 }).then(function (json) {
@@ -404,7 +404,7 @@ function E_error(error, info) {
 //#region 檔案讀取
 function cache(x) {
     try {
-        fetch('http://150.117.110.118/update.json')
+        fetch('http://exptech.mywire.org/update.json')
             .then(function (res) {
                 return res.json();
             }).then(function (json) {
@@ -472,9 +472,9 @@ function cache(x) {
                                             }
                                         }
                                     }
+                                    if (check != "") config_json["Update_ver"] = update_ver
+                                    if (check != "") C_send(consolechannel, ":arrow_up: Update_ver [" + update_ver + "]");
                                 }
-                                if (check != "") config_json["Update_ver"] = update_ver
-                                if (check != "") C_send(consolechannel, ":arrow_up: Update_ver [" + update_ver + "]");
                             }
                             if (err == "") {
                                 if (check != "") C_send(consolechannel, ":white_check_mark: 配置文件加載成功 版本: " + ver);
@@ -503,7 +503,7 @@ function cache(x) {
 //#region set
 function SET(x) {
     try {
-        fetch('http://150.117.110.118/check.json')
+        fetch('http://exptech.mywire.org/check.json')
             .then(function (res) {
                 return res.json();
             }).then(function (json) {
