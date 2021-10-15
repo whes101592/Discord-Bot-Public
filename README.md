@@ -79,6 +79,7 @@ node index.js
 ## 進階設定 - Bot.json
 ```
 {
+    "URL_Security_Verification": true, //網址安全檢查功能
     "Translate_State": false, 啟用或關閉 翻譯功能
     "Translate_Repeat_Tag": true, //啟用或關閉 翻譯時重複 Tag
     "Translate_en": "Channel_ID", //英文 頻道ID
