@@ -2,6 +2,6 @@
     "token": "<Your Discord Bot Token>",
     "console": "Console ID",
     "Update_ver": 100,
-    "API_URL": "http://150.117.110.118:1015/",
+    "API_URL": "http://exptech.mywire.org:1015/",
     "API_KEY": ""
 }
