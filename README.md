@@ -21,7 +21,7 @@
 ## 項目概要
 * Discord-Bot-Public 公版機器人架構
 * 每周五發布新版本
-* 追求穩定可使用基於 Code區域 原始碼開發位於 (Tag) 區域之已發布版本
+* 追求穩定可使用基於 原始碼 開發位於 (Release) 區域之已發布版本
 * 不推薦使用 Code區域 原始碼創建機器人
 * 如需更改代碼請創建分支或新增拉取請求並遵守 AGPL-3.0 開源協議
 * Discord (https://discord.gg/TtvkHwy97f)
@@ -41,7 +41,7 @@
 
 ### 建立環境
 * 下載 機器人 核心代碼 index.js檔案 載點: (https://github.com/ExpTech-tw/Discord-Bot-Public/releases)
-* 將 檔案 放到桌面空資料夾
+* 將 檔案 放到桌面資料夾
 * 使用 Windows+R 打開 CMD 視窗
 * 使用下方指令檢查是否有安裝 Node
 ```console 
@@ -54,7 +54,8 @@ v16.10.0
 * Windows Node V 16.10.0 載點: (https://nodejs.org/dist/v16.10.0/node-v16.10.0-x64.msi)
 * 確認安裝 Node 之後 CD 到 index.js 的目錄下 (請使用自己的路徑)
 ```console 
-cd C:\Users\E\Desktop\Discord-Bot-Public\
+#範例 (請根據自己的實際路徑更改 CD 位置)
+cd C:\Users\Desktop\Discord-Bot-Public\
 ```
 * Node.js 模組
 ```console
