@@ -38,10 +38,6 @@
 * Node.js - V 16.10.0
 * npm - V 7.24.0
 * discord.js - V 13.2.0
-### Node.js 模組
-```console
-npm install axios
-```
 
 ### 建立環境
 * 下載 機器人 核心代碼 Zip檔案 載點: (https://github.com/ExpTech-tw/Discord-Bot-Public/releases)
@@ -59,6 +55,11 @@ v16.10.0
 * 確認安裝 Node 之後 CD 到 index.js 的目錄下 (請使用自己的路徑)
 ```console 
 cd C:\Users\E\Desktop\Discord-Bot-Public\
+```
+* Node.js 模組
+```console
+npm install axios
+npm i node-fetch@1.7.3
 ```
 * 啟動機器人
 ```console 
