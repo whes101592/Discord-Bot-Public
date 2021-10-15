@@ -7,9 +7,9 @@ const fetch = require('node-fetch');
 const axios = require('axios')
 //#endregion
 
-let ver = "21w42-Public-Beta"
+let ver = "21w42-Public-Beta-1"
 
-let basedon = "21w42-Public-Beta" //請勿更改
+let basedon = "21w42-Public" //請勿更改
 let debug = "" //請勿更改
 
 //#region 變數宣告區域
