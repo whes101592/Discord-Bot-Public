@@ -61,7 +61,7 @@ fs.readFile(config_path, function (error, data) {
 //#region 初始化完成
 client.on('ready', () => {
     if (debug == "1") {
-        C_send(consolechannel, ":closed_lock_with_key: 檢測到非正式版本 為確保數據安全已終止進程 - " + ver);
+        C_send(consolechannel, ":closed_lock_with_key: 檢測到非正式版本 為確保數據安全已終止進程 - " + ver)
         console.log('\x1b[31m', "Warn: 5-2-0014 版本: " + ver, '\x1b[0m')
         C_send(consolechannel, ":octagonal_sign: Warn: 5-2-0014 版本: " + ver)
         STOP()
